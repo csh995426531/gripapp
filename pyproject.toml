@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "grip"
-version = "0.2.0"
+version = "0.0.1"
 description = "Local secure MCP resource gateway with thin cloud HTTPS APIs"
 readme = "README.md"
 requires-python = ">=3.11"

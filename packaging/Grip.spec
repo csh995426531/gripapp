@@ -161,8 +161,8 @@ if sys.platform == "darwin":
         info_plist={
             "CFBundleName": "Grip",
             "CFBundleDisplayName": "Grip",
-            "CFBundleShortVersionString": "0.2.0",
-            "CFBundleVersion": "0.2.0",
+            "CFBundleShortVersionString": "0.0.1",
+            "CFBundleVersion": "0.0.1",
             "CFBundleIconFile": "Grip",
             "LSMinimumSystemVersion": "13.0",
             "LSUIElement": True,

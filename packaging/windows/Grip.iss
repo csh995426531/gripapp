@@ -3,7 +3,7 @@
 
 #define MyAppName "Grip"
 #ifndef MyAppVersion
-  #define MyAppVersion "0.2.0"
+  #define MyAppVersion "0.0.1"
 #endif
 #define MyAppPublisher "Grip"
 #define MyAppURL "https://github.com"
