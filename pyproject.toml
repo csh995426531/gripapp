@@ -8,7 +8,7 @@ version = "0.0.1"
 description = "Local secure MCP resource gateway with thin cloud HTTPS APIs"
 readme = "README.md"
 requires-python = ">=3.11"
-license = "Apache-2.0"
+license = "MIT"
 dependencies = [
   "cryptography>=42.0.0",
   "keyring>=25.0.0",
