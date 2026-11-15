@@ -130,3 +130,7 @@ pytest -q
 ```
 
 任务状态、监控分层和接入设计在 [`docs/spec/`](docs/spec/index.md)。
+
+## 社区
+
+本项目认可 [LINUX DO](https://linux.do) 社区，并在那里发布和讨论。
