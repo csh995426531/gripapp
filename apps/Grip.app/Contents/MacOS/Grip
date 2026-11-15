@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail
+MACOS_DIR="$(cd "$(dirname "$0")" && pwd -P)"
+# .../apps/Grip.app/Contents/MacOS → repo root
+ROOT="$(cd "$MACOS_DIR/../../../.." && pwd -P)"
+LOG="${TMPDIR:-/tmp}/grip-menubar.log"
+{
+  echo "[$(date '+%F %T')] launching Grip from $ROOT"
+  echo "python=$ROOT/.venv/bin/python"
+} >>"$LOG"
+export PATH="$ROOT/.venv/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export GRIP_MENUBAR_DIRECT=1
+cd "$ROOT"
+exec "$ROOT/.venv/bin/python" -c "from grip.native_app import run_native_menubar; run_native_menubar()"
