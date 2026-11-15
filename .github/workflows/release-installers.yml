@@ -1,0 +1,70 @@
+name: Release installers
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  macos:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build DMG
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -U pip
+          .venv/bin/pip install -e ".[menubar]" "pyinstaller>=6.0"
+          chmod +x scripts/build_macos_installer.sh
+          ./scripts/build_macos_installer.sh
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-dmg
+          path: dist/Grip-*-macOS.dmg
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Inno Setup
+        run: choco install innosetup -y
+      - name: Build Setup.exe
+        shell: pwsh
+        run: |
+          python -m venv .venv
+          .\.venv\Scripts\pip install -U pip
+          .\.venv\Scripts\pip install -e ".[menubar]" "pyinstaller>=6.0"
+          .\scripts\build_windows_installer.ps1
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-setup
+          path: |
+            dist/Grip-*-windows-setup.exe
+            dist/Grip/Grip.exe
+
+  publish:
+    needs: [macos, windows]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/macos-dmg/*
+            artifacts/windows-setup/*.exe
+          generate_release_notes: true
