@@ -31,6 +31,7 @@ if (-not $Iscc) {
 if ($Iscc) {
   Write-Host "==> Inno Setup ($Iscc)"
   & $Iscc "/DMyAppVersion=$Version" (Join-Path $Root "packaging\windows\Grip.iss")
+  if ($LASTEXITCODE -ne 0) { throw "Inno Setup failed ($LASTEXITCODE)" }
   Write-Host "Installer: dist\Grip-$Version-windows-setup.exe"
 } else {
   Write-Host "Inno Setup (ISCC) not found — onedir app is at dist\Grip\"
